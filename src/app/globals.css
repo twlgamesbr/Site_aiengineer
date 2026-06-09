@@ -1,39 +1,145 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius: 0.75rem;
+}
+
 :root {
-  --background: #0a0a0b;
-  --foreground: #e8e8ed;
+  --background: #08080a;
+  --foreground: #ededf2;
+  --card: #0f0f12;
+  --card-foreground: #ededf2;
+  --muted: #16161a;
+  --muted-foreground: #8b8b94;
+  --border: #1d1d22;
   --accent: #7c5cfc;
   --accent-light: #a78bfa;
-  --muted: #6b7280;
-  --card: #131316;
-  --border: #1f1f23;
+  --accent-foreground: #ffffff;
+  --ring: #7c5cfc;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
+/* Subtle ambient glow at the top of the page */
+.bg-grid {
+  background-image:
+    radial-gradient(60rem 30rem at 50% -10rem, rgba(124, 92, 252, 0.12), transparent 70%);
+}
+
+::selection {
+  background: rgba(124, 92, 252, 0.3);
+  color: #fff;
+}
+
+/* Article prose styling */
 .prose {
-  --tw-prose-body: #d4d4d8;
-  --tw-prose-headings: #f4f4f5;
+  --tw-prose-body: #c9c9d2;
+  --tw-prose-headings: #f4f4f8;
   --tw-prose-links: var(--accent-light);
-  --tw-prose-bold: #f4f4f5;
-  --tw-prose-code: #e4e4e7;
-  --tw-prose-pre-bg: #18181b;
-  --tw-prose-quotes: #d4d4d8;
+  --tw-prose-bold: #f4f4f8;
+  --tw-prose-code: #e4e4ec;
+  --tw-prose-pre-bg: #0c0c0f;
+  --tw-prose-quotes: #c9c9d2;
   --tw-prose-quote-borders: var(--accent);
+  --tw-prose-counters: #8b8b94;
+  --tw-prose-bullets: #3a3a42;
+  --tw-prose-hr: var(--border);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
 }
 
-pre {
+.prose :where(h2):not(:where([class~="not-prose"] *)) {
+  scroll-margin-top: 6rem;
+  letter-spacing: -0.01em;
+}
+
+.prose :where(h3):not(:where([class~="not-prose"] *)) {
+  scroll-margin-top: 6rem;
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-light) 40%, transparent);
+  transition: border-color 0.15s ease;
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)):hover {
+  border-bottom-color: var(--accent-light);
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)):not(pre code) {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *))::before,
+.prose :where(code):not(:where([class~="not-prose"] *))::after {
+  content: none;
+}
+
+.prose :where(img):not(:where([class~="not-prose"] *)) {
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+  font-size: 0.875rem;
+}
+
+.prose :where(thead th):not(:where([class~="not-prose"] *)) {
+  color: var(--muted-foreground);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.prose :where(tbody tr):not(:where([class~="not-prose"] *)):hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
 }
 
 /* Syntax highlight overrides for dark theme */
 .hljs {
-  background: #18181b !important;
+  background: #0c0c0f !important;
 }
